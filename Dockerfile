@@ -3,7 +3,7 @@ FROM php:7.1-alpine
 LABEL maintainer="Jun <zhoujun3372@gmail.com>"
 
 RUN apk add --no-cache --virtual .build-deps \
-	vim \
+    vim \
     wget \
     autoconf \
     file \
