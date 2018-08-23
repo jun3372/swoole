@@ -12,9 +12,7 @@ RUN apk add --no-cache --virtual .build-deps \
     pkgconf \
     re2c \ 
     tzdata \
-    zlib-dev \
     coreutils \
-    supervisor \
     libltdl \
     freetype-dev \
     gettext-dev \
