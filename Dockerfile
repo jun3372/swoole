@@ -1,4 +1,4 @@
-FROM php:7.2.8-alpine3.7	
+FROM php:7.1.9-alpine	
 
 LABEL maintainer="Jun <zhoujun3372@gmail.com>"
 
