@@ -48,12 +48,14 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  && echo "Asia/Shanghai"
 
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
-    && composer self-update --clean-backups
+    && composer self-update --clean-backups 
+    
 
 RUN apk del .build-deps
 RUN rm -rf /var/cache/apk/*
+RUN pecl clear-cache
 
-EXPOSE 9000
+EXPOSE 80
 
 
-CMD ["php-fpm"]
+# CMD ["php-fpm"]
