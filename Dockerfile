@@ -38,7 +38,7 @@ RUN docker-php-ext-install -j$(nproc) gd
 RUN pecl install redis 
 RUN pecl install memcached 
 RUN pecl install swoole
-#RUN && pecl install xdebug-2.5.0 
+#RUN pecl install xdebug-2.5.0 
 
 RUN docker-php-ext-enable redis memcached swoole 
 
