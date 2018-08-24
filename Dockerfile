@@ -1,61 +1,50 @@
-FROM php:7.1-alpine	
+FROM php:7.2-alpine
 
 LABEL maintainer="Jun <zhoujun3372@gmail.com>"
 
+# 安装依赖
 RUN apk add --no-cache --virtual .build-deps \
+    g++ \
     vim \
     wget \
-    autoconf \
-    file \
-    gcc \
-    g++ \
-    libc-dev \
     make \
-    pkgconf \
-    re2c \ 
     tzdata \
-    coreutils \
-    libltdl \
-    freetype-dev \
-    gettext-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
+    hiredis \
+    autoconf \
     curl-dev \
-    libmcrypt-dev \
-    libxml2-dev \
-    cyrus-sasl-dev \
-    libmemcached-dev \
-    hiredis
+    libpng-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libmemcached-dev 
+    
 
-RUN rm -rf /var/lib/apt/lists/* 
 
-RUN docker-php-ext-install -j$(nproc) \
-    iconv mcrypt gettext curl mysqli pdo pdo_mysql zip \
-    mbstring bcmath opcache xml simplexml sockets hash soap
-
+# 安装GD库
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
-RUN docker-php-ext-install -j$(nproc) gd
+# 安装PHP扩展
+RUN docker-php-ext-install -j$(nproc) gd iconv mcrypt gettext curl mysqli pdo pdo_mysql zip mbstring bcmath opcache xml simplexml sockets hash soap
 
+# 安装扩展
 RUN pecl install redis 
 RUN pecl install memcached 
 RUN pecl install swoole
-#RUN pecl install xdebug-2.5.0 
 
+# 开启扩展
 RUN docker-php-ext-enable redis memcached swoole 
 
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  && echo "Asia/Shanghai" >  /etc/timezone
-
+# 安装Composer
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups 
-    
 
+# 设置上海时区
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  && echo "Asia/Shanghai" >  /etc/timezone
+
+# 清理缓存
 RUN apk del .build-deps
 RUN rm -rf /var/cache/apk/*
 RUN pecl clear-cache
 
+# 暴露端口
 EXPOSE 80
-
-
-# CMD ["php-fpm"]
