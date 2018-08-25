@@ -13,9 +13,12 @@ RUN apk add --no-cache --virtual .build-deps \
     autoconf \
     curl-dev \
     libpng-dev \
+    gettext-dev \
     freetype-dev \
-    libjpeg-turbo-dev \
-    libmemcached-dev 
+    libmcrypt-dev \
+    cyrus-sasl-dev \
+    libmemcached-dev \
+    libjpeg-turbo-dev  
     
 
 
