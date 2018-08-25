@@ -23,7 +23,7 @@ RUN apk add --no-cache --virtual .build-deps \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # 安装PHP扩展
-RUN docker-php-ext-install -j$(nproc) gd iconv mcrypt gettext curl mysqli pdo pdo_mysql zip mbstring bcmath opcache xml simplexml sockets hash soap
+RUN docker-php-ext-install -j$(nproc) gd iconv gettext curl mysqli pdo pdo_mysql zip mbstring bcmath opcache xml simplexml sockets hash soap
 
 # 安装扩展
 RUN pecl install redis 
