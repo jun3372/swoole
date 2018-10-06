@@ -1,0 +1,15 @@
+sudo: required
+
+language: bash
+services: docker
+
+env:
+ - DOCKER_IMAGE=jun3/swoole-temp
+
+script:
+  - docker build -t ${DOCKER_IMAGE} .
+
+after_script:
+  - docker images
+  - docker run -d -p 80:80 -d ${DOCKER_IMAGE}
+  - docker ps -a
